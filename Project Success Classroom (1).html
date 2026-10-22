@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An interactive classroom lesson on assuring project success and benefits arising from projects.">
+<title>Project Success — Interactive Classroom</title>
+<style>
+:root { color-scheme: light; --ink:#14271f; --muted:#66756d; --paper:#f5f7f3; --surface:#ffffff; --surface2:#e9f1eb; --line:#d7e1d9; --accent:#20d96b; --accent2:#def8e7; --gold:#c1842d; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+#app { min-height: 100vh; width: 100%; background: var(--paper); border-radius: 0; }
+a { color: var(--accent); }
+button, summary { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.wrap { width: min(1380px, calc(100% - 44px)); margin: 0 auto; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:16px max(22px, calc((100vw - 1380px)/2)); margin-left:calc(50% - 50vw); width:100vw; border-bottom:1px solid rgba(255,255,255,.12); gap:20px; background:#052c21; color:#f4fff7; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:-.03em; }
+.brandmark { width:36px; height:36px; border-radius:50% 50% 45% 45%; display:grid; place-items:center; border:1.5px solid #9df0b8; background:transparent; color:#9df0b8; font-weight:900; font-size:12px; }
+.nav { display:flex; align-items:center; flex-wrap:wrap; gap:24px; font-size:13px; }
+.nav a { color:#d3e5d9; text-decoration:none; padding:6px 0; border-bottom:2px solid transparent; }
+.nav a:hover, .nav a:focus-visible { color:#fff; border-bottom-color:var(--accent); }
+.hero { position:relative; isolation:isolate; margin-left:calc(50% - 50vw); width:100vw; height:calc(100vh - 64px); min-height:515px; max-height:820px; padding:48px max(22px, calc((100vw - 1120px)/2)) 145px; display:flex; justify-content:center; align-items:flex-start; text-align:center; color:#fff; overflow:hidden; background-color:#23334b; background-image:linear-gradient(180deg,rgba(11,19,39,.25) 0%,rgba(13,20,34,.08) 44%,rgba(4,20,20,.18) 70%,rgba(2,17,16,.5) 100%),url("https://static.wixstatic.com/media/4507a2_88c75ac98bed475898470fb4a5466474~mv2.jpg/v1/fill/w_1920%2Ch_1345%2Cal_c%2Cq_90%2Cusm_0.66_1.00_0.01/4507a2_88c75ac98bed475898470fb4a5466474~mv2.jpg"); background-size:cover; background-position:center 43%; }
+.hero:before { content:""; position:absolute; z-index:-1; inset:0; background:linear-gradient(180deg,rgba(12,20,39,.14) 0%,transparent 36%,rgba(3,20,18,.18) 72%,rgba(2,15,15,.5) 100%); }
+.hero:after { content:"Independent teaching prototype — not an official university website"; position:absolute; left:8px; bottom:4px; z-index:1; color:rgba(255,255,255,.94); font-size:10px; font-style:italic; font-weight:650; text-shadow:0 1px 3px rgba(0,0,0,.65); }
+.hero > div { width:min(980px,100%); margin:0 auto; }
+.eyebrow { text-transform:uppercase; letter-spacing:.14em; font-weight:800; font-size:11px; color:var(--accent); }
+.hero .eyebrow { color:rgba(255,255,255,.9); letter-spacing:.2em; font-size:13px; font-weight:500; }
+h1 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(42px,5.2vw,64px); line-height:.99; letter-spacing:-.045em; margin:12px auto 20px; max-width:960px; text-wrap:balance; }
+.lede { font-size:clamp(15px,1.55vw,17px); line-height:1.4; color:rgba(255,255,255,.9); max-width:740px; margin:0 auto; text-shadow:0 1px 2px rgba(0,0,0,.2); }
+.actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; justify-content:center; }
+.btn { border:1px solid var(--line); border-radius:999px; padding:11px 17px; background:var(--surface); color:var(--ink); text-decoration:none; font-weight:700; font-size:14px; display:inline-flex; align-items:center; gap:8px; }
+.btn.primary { background:var(--accent); border-color:var(--accent); color:#052b1f; box-shadow:0 8px 24px rgba(16,208,97,.18); }
+.btn.primary:hover { filter:brightness(1.04); transform:translateY(-1px); }
+.hero .actions .btn.primary { min-width:315px; min-height:60px; justify-content:center; padding:15px 34px; font-size:18px; background:#34e66e; border-color:#34e66e; color:#041c13; }
+.hero .actions .btn:not(.primary) { display:none; }
+.hero-art { display:none; }
+.hero-art { width:min(850px,100%); margin:4px auto 0; text-align:left; border:1px solid rgba(255,255,255,.2); border-radius:22px; background:rgba(4,34,27,.79); backdrop-filter:blur(8px); padding:20px 22px; box-shadow:0 16px 44px rgba(0,0,0,.16); }
+.hero-art .eyebrow { color:#8bf7ad; }
+.hero-art h2 { color:#fff; }
+.hero-art .source-note { color:rgba(255,255,255,.65); }
+.chain { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:9px; }
+.chain-step { min-height:68px; border-radius:12px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.08); padding:12px 14px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:3px; font-weight:750; }
+.chain-step small { font-size:11px; color:rgba(255,255,255,.7); font-weight:500; }
+.down { color:#8bf7ad; padding:0; line-height:1; text-align:center; font-size:0; }
+.down:after { content:"→"; font-size:22px; }
+.feature-strip { position:relative; z-index:2; display:grid; grid-template-columns:repeat(3,1fr); gap:0; width:min(790px,calc(100% - 40px)); margin:-145px auto 0; padding:16px 0 26px; border-bottom:0; color:#fff; }
+.feature-item { display:flex; align-items:center; justify-content:center; gap:13px; padding:5px 18px; }
+.feature-item + .feature-item { border-left:1px solid rgba(255,255,255,.52); }
+.feature-icon { color:#96f7aa; font-size:29px; line-height:1; }
+.feature-icon svg { display:block; width:32px; height:32px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.feature-item strong { display:block; font-size:13px; color:#fff; white-space:nowrap; }
+.feature-item small { display:block; color:#a5ffb6; font-size:11px; margin-top:2px; white-space:nowrap; }
+.nav-separator { display:block; width:1px; height:28px; background:rgba(255,255,255,.55); margin-left:12px; }
+.nav-search { width:19px; height:19px; flex:0 0 19px; position:relative; display:block; }
+.nav-search:before { content:""; position:absolute; width:11px; height:11px; left:1px; top:1px; border:2px solid #f2fff6; border-radius:50%; }
+.nav-search:after { content:""; position:absolute; width:7px; height:2px; left:12px; top:13px; background:#f2fff6; transform:rotate(48deg); transform-origin:left center; border-radius:2px; }
+.nav-profile { width:34px; height:34px; border:1.5px solid #f2fff6; border-radius:50%; position:relative; display:block; flex:0 0 34px; }
+.nav-profile:before { content:""; position:absolute; width:7px; height:7px; left:12px; top:6px; background:#f2fff6; border-radius:50%; }
+.nav-profile:after { content:""; position:absolute; width:15px; height:8px; left:8.5px; bottom:6px; background:#f2fff6; border-radius:9px 9px 5px 5px; }
+.hub-view { padding:0 0 42px; }
+.hub-banner { position:relative; isolation:isolate; overflow:hidden; margin-left:calc(50% - 50vw); width:100vw; min-height:210px; padding:25px max(22px, calc((100vw - 1120px)/2)) 20px; color:#fff; background:radial-gradient(ellipse at 72% 20%,rgba(255,124,105,.95),transparent 36%),radial-gradient(ellipse at 16% 24%,rgba(74,93,143,.84),transparent 45%),linear-gradient(120deg,#182c50 0%,#4a3c5a 46%,#bf6f70 74%,#f9ae6d 100%); }
+.hub-banner:before { content:""; position:absolute; z-index:-1; left:0; right:0; bottom:0; height:42%; background:#092b25; opacity:.88; clip-path:polygon(0 30%,4% 30%,4% 5%,12% 5%,12% 66%,17% 66%,17% 24%,23% 24%,23% 70%,31% 70%,31% 40%,37% 40%,37% 70%,47% 70%,47% 34%,51% 34%,51% 67%,61% 67%,61% 22%,66% 22%,66% 70%,74% 70%,74% 48%,80% 48%,80% 71%,88% 71%,88% 10%,95% 10%,95% 55%,100% 55%,100% 100%,0 100%); }
+.hub-banner-content { width:min(860px,100%); margin:0 auto; position:relative; z-index:1; }
+.hub-theme { display:block; letter-spacing:.2em; font-size:12px; margin-bottom:3px; }
+.hub-banner h2 { color:#fff; font-family:Georgia,"Times New Roman",serif; font-size:clamp(38px,5vw,52px); letter-spacing:-.045em; margin:0 0 4px; }
+.hub-banner h3 { color:#fff; font-size:clamp(17px,2.2vw,22px); line-height:1.2; margin:0; }
+.hub-rule { display:block; width:48px; height:4px; border-radius:4px; background:var(--accent); margin:14px 0; }
+.hub-banner p { max-width:620px; font-size:13px; line-height:1.45; color:rgba(255,255,255,.9); margin:0; }
+.hub-content { width:min(1380px,calc(100% - 36px)); margin:0 auto; padding-top:12px; }
+.hub-cards { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:10px; align-items:stretch; }
+.hub-card { color:var(--ink); display:flex; flex-direction:column; min-width:0; padding:0; border:1px solid #e0e5df; border-radius:12px; overflow:hidden; background:#fff; text-align:left; box-shadow:0 3px 9px rgba(17,42,27,.06); transition:transform .16s,border-color .16s,box-shadow .16s; }
+.hub-card:hover { transform:translateY(-3px); border-color:#8adca8; box-shadow:0 7px 18px rgba(17,42,27,.1); }
+.hub-card[aria-pressed="true"] { border:2px solid #20b85a; box-shadow:0 7px 18px rgba(32,184,90,.13); }
+.hub-card[aria-pressed="true"] .hub-image { margin:-1px -1px 0; }
+.hub-image { display:block; height:91px; flex-shrink:0; position:relative; overflow:hidden; background:linear-gradient(135deg,#152f43,#b4d2d2); }
+.hub-image:before,.hub-image:after { content:""; position:absolute; }
+.hub-image:after { width:54px; height:54px; right:12px; top:15px; border:2px solid rgba(255,255,255,.65); transform:rotate(30deg); opacity:.85; }
+.hub-art-1 { background:linear-gradient(140deg,#071b32,#5c94a7 58%,#c3d9da); }
+.hub-art-1:before { width:62px; height:62px; left:calc(50% - 31px); top:13px; border-left:8px solid #e5f2f2; border-right:8px solid #a8c9d2; border-bottom:8px solid #d8e8e6; transform:rotate(30deg); }
+.hub-art-2 { background:radial-gradient(circle at 50% 40%,#f6d9a1 0 4%,transparent 5%),linear-gradient(120deg,#163c45,#91b8a1); }
+.hub-art-2:before { inset:18px 12px 0; background:radial-gradient(ellipse at 15% 65%,#f8ddb0 0 8px,transparent 9px),radial-gradient(ellipse at 35% 45%,#e7c58c 0 9px,transparent 10px),radial-gradient(ellipse at 58% 63%,#f8ddb0 0 8px,transparent 9px),radial-gradient(ellipse at 80% 43%,#e7c58c 0 10px,transparent 11px); }
+.hub-art-3 { background:linear-gradient(135deg,#b8c4c5,#e9e6d9 55%,#779b9a); }
+.hub-art-3:before { width:120%; height:75%; left:-5%; top:14%; background:repeating-linear-gradient(165deg,transparent 0 12px,rgba(255,255,255,.75) 13px 17px,transparent 18px 25px); transform:rotate(-7deg); }
+.hub-art-4 { background:linear-gradient(145deg,#082833,#d68d53 60%,#f1d19a); }
+.hub-art-4:before { width:65px; height:65px; top:15px; left:calc(50% - 32px); border:7px solid rgba(255,255,255,.72); border-bottom-color:transparent; transform:rotate(35deg); }
+.hub-art-5 { background:linear-gradient(145deg,#e4c58d,#ca875b 48%,#456b57); }
+.hub-art-5:before { inset:14px 8px 0; background:linear-gradient(0deg,rgba(7,42,34,.8),transparent 80%); clip-path:polygon(0 100%,0 70%,20% 70%,20% 48%,42% 48%,42% 25%,62% 25%,62% 53%,78% 53%,78% 10%,100% 10%,100% 100%); }
+.hub-art-6 { background:linear-gradient(135deg,#132c43,#6a96bb 54%,#ecdec0); }
+.hub-art-6:before { width:72%; height:52px; left:14%; top:18px; background:repeating-linear-gradient(0deg,#f8f8f1 0 9px,#c2d6dd 10px 12px); transform:rotate(-7deg); box-shadow:0 3px 9px rgba(0,0,0,.2); }
+.hub-art-7 { background:radial-gradient(circle at 68% 22%,#fff1ab,transparent 26%),linear-gradient(135deg,#145744,#85b76c 60%,#e4c46d); }
+.hub-art-7:before { width:90%; height:56px; bottom:0; left:5%; background:linear-gradient(0deg,rgba(8,52,33,.7),transparent); clip-path:polygon(0 85%,20% 60%,34% 70%,54% 35%,69% 50%,100% 0,100% 100%,0 100%); }
+.hub-card-body { display:flex; flex:1; flex-direction:column; align-items:stretch; padding:9px 9px 8px; }
+.hub-card-heading { display:flex; align-items:flex-start; gap:8px; margin-bottom:4px; }
+.hub-number { width:25px; height:25px; flex-shrink:0; border-radius:50%; display:grid; place-items:center; background:#0c3d30; color:#fff; font-weight:850; font-size:12px; }
+.hub-year { font-size:11px; line-height:1.3; font-weight:850; color:#263a30; padding-top:2px; }
+.hub-card strong { display:block; font-size:11px; line-height:1.25; min-height:28px; }
+.hub-summary { display:block; font-size:10.5px; line-height:1.35; color:#68766e; padding:8px 0 9px; flex:1; }
+.hub-source { display:block; border-top:1px solid #e5e9e5; padding-top:7px; margin-top:auto; min-height:46px; font-size:9.5px; line-height:1.25; color:#536158; overflow-wrap:anywhere; }
+.hub-source b { display:block; color:#24392e; font-size:10px; margin-bottom:2px; }
+.hub-arrow { align-self:flex-start; width:29px; height:29px; border-radius:50%; display:grid; place-items:center; margin-top:8px; background:#dff8e6; color:#0c3d30; font-size:19px; line-height:1; }
+.hub-detail { display:grid; grid-template-columns:auto 1fr auto; align-items:start; gap:14px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:17px 20px; margin-top:14px; box-shadow:0 3px 12px rgba(17,42,27,.04); }
+.hub-detail h3 { font-size:18px; margin:2px 0 5px; line-height:1.25; }
+.hub-detail p { margin:0; color:var(--muted); font-size:13px; }
+.hub-detail .source-note { max-width:260px; margin:0; text-align:right; }
+body.hub-mode #home, body.hub-mode .feature-strip, body.hub-mode #timeline, body.hub-mode #video, body.hub-mode #learn, body.hub-mode #sources, body.hub-mode footer { display:none !important; }
+.nav a[aria-current="page"] { color:#fff; border-bottom-color:var(--accent); }
+.section { padding:58px 0; border-top:1px solid var(--line); }
+.section-head { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:25px; }
+h2 { font-size:clamp(28px,4vw,42px); letter-spacing:-.045em; line-height:1.1; margin:8px 0 10px; }
+.section-head p { max-width:560px; color:var(--muted); margin:0; }
+.kicker { color:var(--muted); font-size:13px; }
+.timeline { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:12px; }
+.time-card { min-height:225px; text-align:left; border:1px solid var(--line); border-radius:15px; background:var(--surface); color:var(--ink); padding:12px; transition:transform .15s,border-color .15s,box-shadow .15s; overflow:hidden; box-shadow:0 3px 12px rgba(17,42,27,.04); }
+.time-card:hover { transform:translateY(-3px); border-color:var(--accent); }
+.time-card:before { content:""; display:block; height:66px; margin:-12px -12px 12px; background:linear-gradient(135deg,#183a56,#66afc0); }
+.time-card:nth-child(2):before { background:radial-gradient(circle at 55% 45%,#f4c58e 0 10%,transparent 11%),linear-gradient(135deg,#234e4b,#91c5a0); }
+.time-card:nth-child(3):before { background:linear-gradient(150deg,transparent 48%,rgba(255,255,255,.65) 49% 52%,transparent 53%),linear-gradient(135deg,#b7c4c1,#3f7775); }
+.time-card:nth-child(4):before { background:linear-gradient(135deg,#17343e,#df9a60 55%,#f7d69a); }
+.time-card:nth-child(5):before { background:linear-gradient(140deg,#c3d0b5,#e6ad65 45%,#34574b); }
+.time-card:nth-child(6):before { background:linear-gradient(135deg,#162c40,#6e9fc2 55%,#e8d8b3); }
+.time-card:nth-child(7):before { background:radial-gradient(circle at 70% 20%,#fff0a9,transparent 25%),linear-gradient(135deg,#1d5143,#91bd7d 60%,#e7c46c); }
+.time-card[aria-pressed="true"] { border:2px solid #19b85b; background:var(--accent2); padding:11px; box-shadow:0 7px 20px rgba(25,184,91,.11); }
+.time-card[aria-pressed="true"]:before { margin:-11px -11px 12px; }
+.year { display:block; font-weight:900; font-size:20px; letter-spacing:-.04em; margin-bottom:5px; }
+.time-card strong { display:block; font-size:12px; line-height:1.3; }
+.time-card span:last-child { display:block; margin-top:7px; font-size:11px; line-height:1.35; color:var(--muted); }
+.detail { margin-top:14px; border:1px solid var(--line); background:var(--surface); border-radius:18px; padding:24px; display:grid; grid-template-columns:.8fr 1.2fr; gap:24px; box-shadow:0 6px 20px rgba(20,39,31,.04); }
+.detail h3 { margin:6px 0 8px; font-size:24px; letter-spacing:-.03em; }
+.detail p { margin:0; color:var(--muted); }
+.detail ul { margin:0; padding-left:20px; }
+.detail li { margin:7px 0; }
+.source-note { font-size:12px; color:var(--muted); margin-top:12px; }
+.video-box { display:grid; grid-template-columns:1.4fr .6fr; gap:20px; }
+.video-placeholder { min-height:310px; border-radius:20px; border:1px dashed var(--line); background:linear-gradient(135deg,var(--surface2),var(--surface)); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:25px; }
+.play { width:66px; height:66px; border-radius:50%; background:var(--accent); color:white; display:grid; place-items:center; font-size:25px; margin-bottom:18px; }
+.video-placeholder h3 { margin:0 0 7px; font-size:22px; }
+.video-placeholder p { color:var(--muted); max-width:470px; margin:0; }
+.note-card { border:1px solid var(--line); border-radius:18px; padding:22px; background:var(--surface); }
+.note-card h3 { margin:0 0 10px; }
+.note-card p, .note-card li { color:var(--muted); font-size:14px; }
+.note-card ul { padding-left:18px; }
+.model-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.model-card { border:1px solid var(--line); border-radius:16px; background:var(--surface); padding:18px; }
+.model-card .num { font-size:12px; font-weight:900; color:var(--accent); letter-spacing:.1em; }
+.model-card h3 { margin:8px 0; font-size:18px; }
+.model-card p { color:var(--muted); font-size:14px; margin:0; }
+.interactive { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.simulator, .quiz { border:1px solid var(--line); background:var(--surface); border-radius:18px; padding:23px; }
+.simulator h3,.quiz h3 { margin:0 0 8px; font-size:22px; }
+.simulator p,.quiz p { color:var(--muted); }
+select { width:100%; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:10px; padding:12px; margin:6px 0 14px; }
+.result { border-left:3px solid var(--accent); background:var(--surface2); padding:13px 15px; border-radius:0 10px 10px 0; margin-top:12px; min-height:65px; }
+.q-option { display:block; width:100%; text-align:left; padding:12px 14px; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:11px; margin:8px 0; }
+.q-option:hover { border-color:var(--accent); }
+.q-option.correct { border-color:var(--accent); background:var(--accent2); }
+.q-option.wrong { border-color:var(--gold); }
+.quiz-footer { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:15px; }
+.sources { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.source { padding:18px; border:1px solid var(--line); border-radius:15px; background:var(--surface); }
+.source strong { display:block; margin-bottom:7px; }
+.source p { margin:0; color:var(--muted); font-size:13px; }
+.citation { font-size:12px; color:var(--muted); }
+footer { border-top:1px solid var(--line); padding:28px 0 40px; color:var(--muted); font-size:13px; }
+@media(max-width:1250px) { .timeline { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+@media(max-width:950px) { .hub-cards { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+@media(max-width:800px) { .hero,.detail,.video-box,.interactive { grid-template-columns:1fr; } .hero { height:auto; min-height:690px; padding-top:40px; padding-bottom:185px; background-position:center center; } .desktop-break { display:none; } .timeline { grid-template-columns:repeat(2,minmax(0,1fr)); } .model-grid { grid-template-columns:repeat(2,1fr); } .sources { grid-template-columns:1fr; } .section-head { display:block; } .chain { grid-template-columns:1fr; } .down:after { content:"↓"; } .feature-strip { grid-template-columns:1fr; width:min(330px,calc(100% - 40px)); gap:12px; margin-top:-176px; padding-top:12px; padding-bottom:25px; } .feature-item { justify-content:flex-start; width:100%; margin:auto; padding:4px 8px; } .feature-item + .feature-item { border-left:0; } .topbar { flex-wrap:wrap; padding-left:18px; padding-right:18px; } .nav { gap:13px; } .nav-separator { margin-left:0; } .hub-banner { min-height:200px; padding-top:25px; } .hub-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } .hub-image { height:85px; } .hub-detail { grid-template-columns:auto 1fr; } .hub-detail .source-note { grid-column:2; text-align:left; max-width:none; } }
+@media(max-width:430px) { .wrap { width:calc(100% - 26px); } .nav { gap:10px; } .nav a { font-size:12px; } .timeline,.model-grid { grid-template-columns:1fr 1fr; } .time-card { padding:10px; min-height:172px; } .time-card:before { height:54px; margin:-10px -10px 10px; } .time-card[aria-pressed="true"]:before { margin:-9px -9px 10px; } .year { font-size:18px; } .hero-art { padding:16px; } .hub-content { width:calc(100% - 24px); } .hub-banner { padding-left:16px; padding-right:16px; } .hub-banner h2 { font-size:37px; } .hub-banner h3 { font-size:16px; } .hub-cards { gap:8px; } .hub-card-body { padding:8px 7px; } .hub-summary { font-size:10px; } .hub-source { font-size:9px; } .hub-detail { padding:13px; gap:10px; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand"><span class="brandmark">UL</span><span>UNIVERSITY OF LIMERICK <small style="display:block;font-size:10px;font-weight:500;letter-spacing:.08em;color:#b9d6c5">THEME 6 · PROJECT SUCCESS</small></span></div>
+      <nav class="nav" aria-label="Main navigation"><a href="#home" aria-current="page">Home</a><a href="#learningHub">Learning Hub</a><a href="#timeline">About</a><a href="#sources">Resources</a><span class="nav-separator" aria-hidden="true"></span><span class="nav-search" aria-hidden="true"></span><span class="nav-profile" aria-hidden="true"></span></nav>
+    </header>
+    <main>
+      <section class="hero" id="home">
+        <div>
+          <div class="eyebrow">THEME 6</div>
+          <h1>Assuring Success and<br>Benefits Arising from Projects</h1>
+          <p class="lede">Explore the evolution of project management, the key factors that influence success,<br class="desktop-break"> and how projects deliver real value and benefits.</p>
+          <div class="actions"><a class="btn primary" href="#learningHub" id="enterHub">Enter Learning Hub <span aria-hidden="true">→</span></a><a class="btn" href="#timeline">Explore seven milestones ↘</a></div>
+        </div>
+        <aside class="hero-art" aria-label="The project success chain">
+          <div class="eyebrow">The central idea</div>
+          <h2 style="font-size:27px;margin:9px 0 18px">Delivery is one link in the chain.</h2>
+          <div class="chain">
+            <div class="chain-step"><span>Output</span><small>What is produced</small></div><div class="down">↓</div>
+            <div class="chain-step"><span>Utilisation</span><small>What gets used</small></div><div class="down">↓</div>
+            <div class="chain-step"><span>Outcome</span><small>What changes</small></div><div class="down">↓</div>
+            <div class="chain-step"><span>Benefit / value</span><small>Why it matters</small></div>
+          </div>
+          <p class="source-note">Conceptual chain based on Zwikael &amp; Smyrk (2019), as represented in the supplied key article.</p>
+        </aside>
+      </section>
+
+      <section class="hub-view" id="learningHub" hidden>
+        <div class="hub-banner">
+          <div class="hub-banner-content">
+            <span class="hub-theme">THEME 6</span>
+            <h2>Learning Hub</h2>
+            <h3>Assuring Success and Benefits Arising from Projects</h3>
+            <span class="hub-rule" aria-hidden="true"></span>
+            <p>Explore the key models, frameworks and perspectives that have shaped how we define, measure and deliver project success and benefits.</p>
+          </div>
+        </div>
+        <div class="hub-content">
+          <div class="hub-cards" id="hubCards" role="group" aria-label="Seven milestones in project success"></div>
+          <div class="hub-detail" aria-live="polite">
+            <span class="hub-number" id="hubDetailNumber">1</span>
+            <div><div class="eyebrow" id="hubDetailYear">1969</div><h3 id="hubDetailTitle">Iron Triangle</h3><p id="hubDetailText">Understand the original triple constraint of time, cost and quality, and its role in early project management.</p></div>
+            <p class="source-note" id="hubDetailSource">Source: Barnes, cited in Huemann &amp; Turner (2024).</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="feature-strip" aria-label="Learning outcomes">
+        <div class="feature-item"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3 5.5c5-2 9-1 13 2.5v19c-4-3.5-8-4.5-13-2.5z"/><path d="M29 5.5c-5-2-9-1-13 2.5v19c4-3.5 8-4.5 13-2.5z"/></svg></span><div><strong>Seven key milestones</strong><small>From theory to practice</small></div></div>
+        <div class="feature-item"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 3.5h24v25H4z"/><path d="M9 23v-6M15 23V11M21 23v-9M8 25h16"/></svg></span><div><strong>Evidence-based learning</strong><small>Key models and frameworks</small></div></div>
+        <div class="feature-item"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3.5a9 9 0 0 0-5.7 16v4h11.4v-4A9 9 0 0 0 16 3.5z"/><path d="M12 27h8M13 30h6M16 0v-1M3 9H0M29 9h3M5.5 2.5 3.5.5M26.5 2.5l2-2"/></svg></span><div><strong>Real project insights</strong><small>Applying theory in context</small></div></div>
+      </div>
+
+      <section class="section" id="timeline">
+        <div class="section-head"><div><div class="eyebrow">01 / Seven models of success</div><h2>How is project success assessed?</h2></div><p>Select a model to explore the success criteria listed in your supplied Table 4.1. The timeline follows the seven models and their categories as shown in the table, rather than adding extra claims about the original publications.</p></div>
+        <div class="timeline" role="group" aria-label="Project success timeline" id="timelineCards"></div>
+        <div class="detail" aria-live="polite"><div><div class="eyebrow" id="detailYear">1969</div><h3 id="detailTitle">The Iron Triangle</h3><p id="detailSummary"></p></div><div><strong>What this adds</strong><ul id="detailPoints"></ul><p class="source-note" id="detailSource"></p></div></div>
+      </section>
+
+      <section class="section" id="video">
+        <div class="section-head"><div><div class="eyebrow">02 / Core teaching video</div><h2>The video lesson goes here</h2></div><p>This is a deliberate placeholder. Replace it with the final narrated video when the script and slides are ready.</p></div>
+        <div class="video-box">
+          
+<div class="video-placeholder" aria-label="Teaching video">
+  <iframe
+    src="https://www.youtube.com/watch?v=AdKAYPvmHRQ"
+    title="From delivering projects to assuring benefits"
+    style="width:100%; aspect-ratio:16/9; border:0; border-radius:12px; display:block;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen>
+  </iframe>
+</div>
+
+          <aside class="note-card"><h3>Before you watch</h3><p>Keep these questions in mind:</p><ul><li>Can a project meet time and cost targets but still fail?</li><li>Why doesn't delivering an output guarantee a benefit?</li><li>Who should be accountable for delivery versus outcomes?</li></ul><p class="citation">Grounded in the supplied Pinto &amp; Slevin (1987), Zwikael &amp; Smyrk (2019), and Huemann &amp; Turner (2024) materials.</p></aside>
+        </div>
+      </section>
+
+      <section class="section" id="learn">
+        <div class="section-head"><div><div class="eyebrow">03 / Learn by doing</div><h2>Put the ideas into practice</h2></div><p>Use the scenario and short quiz to test the distinction between delivery success and benefits realization.</p></div>
+        <div class="model-grid">
+          <article class="model-card"><div class="num">STEP 01</div><h3>Define</h3><p>Clarify the target outcomes and the success criteria before delivery starts.</p></article>
+          <article class="model-card"><div class="num">STEP 02</div><h3>Enable</h3><p>Establish the mission, support, people, planning and stakeholder involvement.</p></article>
+          <article class="model-card"><div class="num">STEP 03</div><h3>Monitor</h3><p>Use feedback, communication and troubleshooting to respond during implementation.</p></article>
+          <article class="model-card"><div class="num">STEP 04</div><h3>Realise</h3><p>Check whether outputs are used and intended outcomes and benefits actually occur.</p></article>
+        </div>
+        <p class="source-note">This is a teaching synthesis, not a single framework reproduced from one source. Its elements are drawn from Pinto &amp; Slevin (1987) and Zwikael &amp; Smyrk (2019).</p>
+        <div class="interactive" style="margin-top:20px">
+          <section class="simulator"><div class="eyebrow">Scenario lab</div><h3>Is this project successful?</h3><p>A city installs a new digital booking system. The project finishes on time and within budget. What happens next?</p><label for="scenario">Choose what you learn after launch</label><select id="scenario"><option value="none">Select a situation…</option><option value="adopted">Residents use it and waiting times fall.</option><option value="unused">Residents rarely use it; the old process remains.</option><option value="mixed">Usage rises, but the intended cost savings do not appear.</option></select><div class="result" id="scenarioResult" aria-live="polite">Choose a situation to see how it changes the success assessment.</div></section>
+          <section class="quiz"><div class="eyebrow">Quick knowledge check</div><h3 id="qTitle">Question 1 of 3</h3><p id="qText">Which statement best captures the output–outcome distinction?</p><div id="qOptions"></div><div class="quiz-footer"><span class="kicker" id="qFeedback" aria-live="polite">Choose one answer.</span><button class="btn primary" id="nextQuestion" disabled>Next question →</button></div></section>
+        </div>
+      </section>
+
+      <section class="section" id="sources">
+        <div class="section-head"><div><div class="eyebrow">04 / Evidence trail</div><h2>Sources used in this learning site</h2></div><p>The site is limited to the three key PDFs and the historical source details you supplied. No external sources have been added.</p></div>
+        <div class="sources">
+          <article class="source"><strong>Pinto &amp; Slevin (1987)</strong><p><em>Critical Factors in Successful Project Implementation.</em> Used for the ten critical success factors and the process-oriented implementation model.</p></article>
+          <article class="source"><strong>Zwikael &amp; Smyrk (2019)</strong><p><em>Project Management: A Benefit Realisation Approach.</em> Used for outputs, utilisation, target outcomes, benefits realization, and the distinctions between management, ownership and investment success.</p></article>
+          <article class="source"><strong>Huemann &amp; Turner (2024)</strong><p><em>The Handbook of Project Management</em> material supplied. Used for the historical overview of success criteria, stakeholders, time horizons, business success, benefits/value and sustainability.</p></article>
+        </div>
+        <p class="source-note"><strong>Historical-source transparency:</strong> Barnes (1969), de Wit (1988), Atkinson (1999), Shenhar &amp; Dvir (2007/2014), and Müller (2010) are not treated here as independently read original publications. Where included, their contributions are limited to what is reported in the supplied image and/or Huemann &amp; Turner (2024). Müller is included only at the level stated in your table.</p>
+        <details style="margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)"><summary style="font-weight:750;cursor:pointer">Citation and evidence note</summary><p class="citation">The final academic version should add page numbers and the full bibliographic details from the PDFs themselves. This prototype names the supplied sources and keeps the teaching claims at the level supported by the information already reviewed. It is not a substitute for checking the exact page references before submission.</p></details>
+      </section>
+    </main>
+    <footer><div class="brand"><span class="brandmark">UL</span><span>Project Success / Theme 6</span></div><p>Interactive teaching prototype · Responsive layout · Keyboard-accessible controls</p><p>Independent classroom prototype inspired by the University of Limerick theme; not an official university website. To make it accessible on the public internet, it must be published through a hosting service.</p></footer>
+  </div>
+</div>
+<script>
+const hubMilestones = [
+ {year:'1969',title:'Iron Triangle',summary:'Understand the original triple constraint of time, cost and quality, and its role in early project management.',source:'Barnes, cited in Huemann & Turner (2024).',detail:'The starting point is the classic time, cost and quality constraint. This milestone introduces the original, delivery-focused way of discussing project success.'},
+ {year:'1987',title:'Stakeholder Satisfaction',summary:'Explore the argument for adding stakeholder satisfaction to the Iron Triangle and Pinto & Slevin’s ten critical success factors.',source:'Pinto & Slevin (1987).',detail:'Success is considered alongside the factors that influence implementation and how satisfied key stakeholders are with the result.'},
+ {year:'1988',title:'Project Success from the Business-Case Viewpoint',summary:'Examine the distinction between project success and business-case success, with a stakeholder perspective.',source:'de Wit, cited in Huemann & Turner (2024).',detail:'This milestone shifts attention from delivery alone to the wider judgement of success, including the business case and the perspectives of stakeholders.'},
+ {year:'1999',title:'Atkinson',summary:'Critique the Iron Triangle and discuss time and cost as best guesses, and quality as a phenomenon.',source:'Atkinson, cited in Huemann & Turner (2024).',detail:'Use this milestone to question whether time, cost and quality are sufficient on their own to assess a project’s success.'},
+ {year:'2007',title:'Contingency Model',summary:'Explore how project success depends on what is assessed and the timeframe, with short- and long-term measures.',source:'Shenhar & Dvir (2007).',detail:'The focus broadens to different dimensions of success and the importance of choosing appropriate criteria and time horizons.'},
+ {year:'2010–2014',title:'Broader Project Success Criteria',summary:'Review research identifying common contributors to exceptional project success across 15 outstanding projects, including IBM’s AS/400.',source:'Müller & Turner; Shenhar & Dvir; Zwikael & Smyrk (2019).',detail:'This milestone groups broader perspectives on success and research into factors associated with projects considered exceptional. The card follows the historical summary supplied for this class.'},
+ {year:'2019 – Present',title:'Benefits Realisation, Value Creation and Sustainability',summary:'Explore contemporary perspectives on project success and benefits, and how these ideas apply in today’s context.',source:'Huemann & Turner (2024).',detail:'The emphasis moves beyond producing an output to asking whether it is used, whether intended outcomes occur, and what value and benefits result.'}
+];
+const hubCards = document.getElementById('hubCards');
+function selectHubMilestone(index) {
+ const item = hubMilestones[index];
+ [...hubCards.children].forEach((card,i)=>card.setAttribute('aria-pressed',i===index?'true':'false'));
+ document.getElementById('hubDetailNumber').textContent=String(index+1);
+ document.getElementById('hubDetailYear').textContent=item.year;
+ document.getElementById('hubDetailTitle').textContent=item.title;
+ document.getElementById('hubDetailText').textContent=item.detail;
+ document.getElementById('hubDetailSource').textContent='Source: '+item.source;
+}
+hubMilestones.forEach((item,index)=>{
+ const card=document.createElement('button');
+ card.type='button'; card.className='hub-card'; card.setAttribute('aria-pressed','false');
+ card.innerHTML=`<span class="hub-image hub-art-${index+1}" aria-hidden="true"></span><span class="hub-card-body"><span class="hub-card-heading"><span class="hub-number">${index+1}</span><span class="hub-year"></span></span><strong></strong><span class="hub-summary"></span><span class="hub-source"><b>Source:</b><span></span></span><span class="hub-arrow" aria-hidden="true">→</span></span>`;
+ card.querySelector('.hub-year').textContent=item.year;
+ card.querySelector('.hub-card-body > strong').textContent=item.title;
+ card.querySelector('.hub-summary').textContent=item.summary;
+ card.querySelector('.hub-source span').textContent=item.source;
+ card.addEventListener('click',()=>selectHubMilestone(index));
+ hubCards.appendChild(card);
+});
+selectHubMilestone(0);
+function setActiveNavigation(target) {
+ document.querySelectorAll('.nav a').forEach(link=>{
+  const active=link.getAttribute('href')==='#'+target;
+  if(active) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
+ });
+}
+function showLearningHub() {
+ document.body.classList.add('hub-mode');
+ document.getElementById('learningHub').hidden=false;
+ setActiveNavigation('learningHub');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function showHomeSection(target) {
+ document.body.classList.remove('hub-mode');
+ document.getElementById('learningHub').hidden=true;
+ const navTarget=target==='timeline'?'timeline':target==='sources'?'sources':'home';
+ setActiveNavigation(navTarget);
+ const element=document.getElementById(target);
+ if(element) element.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('enterHub').addEventListener('click',event=>{event.preventDefault();showLearningHub();});
+document.querySelectorAll('.nav a').forEach(link=>link.addEventListener('click',event=>{
+ event.preventDefault();
+ const target=link.getAttribute('href').slice(1);
+ if(target==='learningHub') showLearningHub(); else showHomeSection(target);
+}));
+
+const timeline = [
+ {year:'1969',title:'Barnes · Generic',short:'Time · cost · quality',summary:'The model lists the iron triangle as its success criteria.',points:['Time','Cost','Quality (iron triangle)'],source:'User-provided Table 4.1, “Seven models of success.” The table attributes this model to Barnes (1969).'},
+ {year:'1987',title:'Pinto & Slevin · Generic',short:'Performance · quality · client',summary:'The model combines delivery performance with perceived quality and client satisfaction.',points:['Time, cost, and performance','Perceived quality','Client satisfaction'],source:'User-provided Table 4.1, “Seven models of success.” The table attributes this model to Pinto and Slevin (1987).'},
+ {year:'2003',title:'DeLone & McLean · IS',short:'Quality, use, net benefits',summary:'The information-systems model lists quality, usage-related criteria, satisfaction and net benefits.',points:['Information quality','System quality','Service quality','Intention to use','Use','User satisfaction','Net benefits'],source:'User-provided Table 4.1, “Seven models of success.” The table labels this model “IS.”'},
+ {year:'2007',title:'Shenhar & Dvir · New product development',short:'Efficiency to future preparation',summary:'The model lists success dimensions spanning efficiency, customer and team impact, business/direct success and preparation for the future.',points:['Efficiency','Impact on customer','Impact on team','Business and direct success','Preparation for future'],source:'User-provided Table 4.1, “Seven models of success.” The table labels this model “New product development.”'},
+ {year:'2015',title:'Maltzman & Shirley · Generic',short:'Management · project · green',summary:'The table lists three categories of success for this generic model.',points:['Project management success','Project success','Green success'],source:'User-provided Table 4.1, “Seven models of success.”'},
+ {year:'2018',title:'Ika · International development projects',short:'Management and deliverable',summary:'The model distinguishes project management success from deliverable success.',points:['Project management success: efficiency (time and cost); effectiveness (objectives)','Deliverable success: relevance to the country; relevance for beneficiaries; institutional impact; sustainability'],source:'User-provided Table 4.1, “Seven models of success.” The wording of the criteria follows the table.'},
+ {year:'2021',title:'Zwikael & Meredith · Generic',short:'Management · ownership · investment',summary:'The model separates project management success, project ownership success and project investment success.',points:['Project management success: time, budget, scope; no undesirable impacts by project manager','Project ownership success: target benefits; business case realized','Project investment success: satisfactory results; investment again by funder; overall success'],source:'User-provided Table 4.1, “Seven models of success.” The wording of the criteria follows the table.'}
+];
+const cards = document.getElementById('timelineCards');
+const yearLabel = document.getElementById('detailYear'); const titleLabel = document.getElementById('detailTitle'); const summaryLabel = document.getElementById('detailSummary'); const pointsLabel = document.getElementById('detailPoints'); const sourceLabel = document.getElementById('detailSource');
+function showTimeline(index) { const d=timeline[index]; [...cards.children].forEach((b,i)=>b.setAttribute('aria-pressed',i===index?'true':'false')); yearLabel.textContent=d.year; titleLabel.textContent=d.title; summaryLabel.textContent=d.summary; pointsLabel.replaceChildren(...d.points.map(p=>{const li=document.createElement('li');li.textContent=p;return li;})); sourceLabel.textContent='Source: '+d.source; }
+timeline.forEach((d,i)=>{const b=document.createElement('button');b.className='time-card';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=`<span class="year"></span><strong></strong><span></span>`;b.children[0].textContent=d.year;b.children[1].textContent=d.title;b.children[2].textContent=d.short;b.addEventListener('click',()=>showTimeline(i));cards.appendChild(b);}); showTimeline(0);
+document.getElementById('videoNote').addEventListener('click',()=>{const n=document.getElementById('videoNotes');n.hidden=!n.hidden;document.getElementById('videoNote').textContent=n.hidden?'Show video production notes':'Hide video production notes';});
+document.getElementById('scenario').addEventListener('change',e=>{const r=document.getElementById('scenarioResult');const values={none:'Choose a situation to see how it changes the success assessment.',adopted:'Stronger evidence of benefit realization: the output is being used and the intended outcome (reduced waiting time) appears. This still does not prove every planned benefit or investment return.',unused:'Delivery may have met time and cost targets, but the intended benefit is not yet demonstrated. Investigate adoption and why utilisation is low.',mixed:'Usage is not the same as benefit realization. The system is being used, but the expected cost outcome is not evident; review assumptions and the business case.'};r.textContent=values[e.target.value];});
+const questions=[
+ {q:'Which statement best captures the output–outcome distinction?',opts:['An output is the intended change; an outcome is the thing built.','An output is what the project produces; an outcome is the intended end effect.','Outputs and outcomes mean the same thing.'],correct:1,why:'Correct. Zwikael & Smyrk distinguish the produced output from the target outcome it is intended to help achieve.'},
+ {q:'A project is on time and within budget. What can we safely conclude?',opts:['All intended benefits have been achieved.','The investment was definitely worthwhile.','Delivery performance may be good, but benefits still need to be assessed.'],correct:2,why:'Correct. Delivery success does not automatically establish business-case or investment success.'},
+ {q:'In the benefit-realisation approach, what happens after outputs are delivered?',opts:['The project is always finished.','Utilisation must help secure the intended outcomes.','The business case no longer matters.'],correct:1,why:'Correct. The approach explicitly includes outcomes realisation beyond simply delivering outputs.'}
+]; let qi=0,answered=false,score=0;
+function renderQuestion(){answered=false;const q=questions[qi];document.getElementById('qTitle').textContent=`Question ${qi+1} of ${questions.length}`;document.getElementById('qText').textContent=q.q;document.getElementById('qFeedback').textContent='Choose one answer.';document.getElementById('nextQuestion').disabled=true;document.getElementById('nextQuestion').textContent=qi===questions.length-1?'See score ↗':'Next question →';const opts=document.getElementById('qOptions');opts.replaceChildren();q.opts.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.className='q-option';b.textContent=o;b.addEventListener('click',()=>{if(answered)return;answered=true;const ok=i===q.correct;if(ok)score++;b.classList.add(ok?'correct':'wrong');document.getElementById('qFeedback').textContent=(ok?'Correct. ':'Not quite. ')+q.why;document.getElementById('nextQuestion').disabled=false;[...opts.children].forEach((x,j)=>{x.disabled=true;if(j===q.correct)x.classList.add('correct');});});opts.appendChild(b);});}
+document.getElementById('nextQuestion').addEventListener('click',()=>{if(qi<questions.length-1){qi++;renderQuestion();}else{document.getElementById('qTitle').textContent=`Your score: ${score}/${questions.length}`;document.getElementById('qText').textContent=score===questions.length?'Excellent — you understand the core distinctions.':'Review the timeline and try again to reinforce the distinctions.';document.getElementById('qOptions').replaceChildren();document.getElementById('qFeedback').textContent='Quiz complete.';const b=document.getElementById('nextQuestion');b.textContent='Try again ↺';b.disabled=false;b.onclick=null;b.addEventListener('click',()=>{qi=0;score=0;renderQuestion();},{once:true});}});renderQuestion();
+</script>
+</body>
+</html>
